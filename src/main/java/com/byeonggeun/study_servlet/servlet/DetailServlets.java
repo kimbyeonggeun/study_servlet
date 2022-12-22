@@ -20,23 +20,21 @@ public class DetailServlets extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // input type
-        String questions_uid = request.getParameter("QUESTIONS_UID");
+        String questions_Uid = request.getParameter("QUESTIONS_UID");
 
         // biz with DB and Class
         PollWithDB pollWithDB = new PollWithDB();
         HashMap<String, Object> question = null;
         try {
-            question = pollWithDB.getQuestion(questions_uid);
+            question = pollWithDB.getQuestion(questions_Uid);
             System.out.println(question.get("QUESTIONS_UID"));
             System.out.println(question.get("QUESTIONS"));
             System.out.println(question.get("ORDERS"));
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         // output with html
-        request.setAttribute("questions", question);
+        request.setAttribute("question", question);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/polls/details.jsp");
         requestDispatcher.forward(request, response);

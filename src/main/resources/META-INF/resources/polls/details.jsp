@@ -1,6 +1,5 @@
-<%@ page import="java.util.HashMap, java.util.ArrayList" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page import="java.util.HashMap,java.util.ArrayList" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,23 +16,39 @@
     <link rel="stylesheet" href="./css/commons.css" />
   </head>
   <body>
-    <% ArrayList<HashMap> bundle_list = (ArrayList<HashMap>)request.getAttribute("questions_example_list"); %>
-      
-      <% for(int i=1; i<6; i++){ %>
-      <a href="/poll/DetailServlets?QUESTIONS_UID=Q<%= i%>">Q<%= i%></a> /
-      <% } %>
-      
-      <% String order = request.getParameter("QUESTIONS_UID"); %>
-
-      <% int intOrder = 0; 
-        if(order==null) { %>
-        <div><%= bundle_list.get(0).get("ORDERS")+". "+bundle_list.get(0).get("QUESTIONS")%></div>
-        <div><%= bundle_list.get(0).get("EXAMPLE")%></div>
-        <% } else { 
-          intOrder = Integer.parseInt(order); %>
-          <div><%= bundle_list.get(intOrder-1).get("ORDERS")+". "+bundle_list.get(intOrder-1).get("QUESTIONS")%></div>
-        <div><%= bundle_list.get(intOrder-1).get("EXAMPLE")%></div>
-          <% } %>
+	<% 
+		HashMap<String, Object> question = (HashMap<String, Object>) request.getAttribute("question");
+		ArrayList questionsUidList = (ArrayList) request.getAttribute("questionsUidList");
+		ArrayList answersList = (ArrayList) request.getAttribute("answersList");
+		String questionsUid = (String) request.getAttribute("questionsUid");
+	%>
+		<div class="container">
+            <!-- 문항 번호 -->
+			<div>
+			    <div class="pagination justify-content-left">
+						
+				    <%  for (int i = 0; i < questionsUidList.size(); i++) { %>
+				    	<span class="">
+				    	<a class="page-item page-link text-bg-primary" href="/polls/PollServlet?QUESTIONS_UID=<%= questionsUidList.get(i)%>"><%= questionsUidList.get(i)%></a>
+				    	</span>
+				    <%  } %>
+						
+				</div>
+			</div>
+            <!-- 문항 -->
+			<div class="mt-3 mb-2">
+				<%= question.get("ORDERS") %>. <%= question.get("QUESTIONS")%>
+			</div>
+            <!-- 답항 -->
+			<div> 
+				<% for (int i=0; i<answersList.size();i++) { %>
+						<span>
+							<input type="radio" id="radio_<%=i%>" name="radio_<%=questionsUid %>">
+							<label for="radio_<%=i%>">(<%= i+1%>)<%=answersList.get(i)%></label>
+						</span>
+				<% } %>
+			</div>
+		</div>
         
           
     <script

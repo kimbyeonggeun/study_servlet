@@ -43,13 +43,19 @@ public class CreatSessionJSPServlets extends HttpServlet {
                 httpSession.setAttribute("username", username);
                 httpSession.setAttribute("password", password);
             }
+            System.out.println(httpSession.getAttribute("username"));
+            System.out.println(httpSession.getId());
+
             path = "/session/checkLogin.jsp";
         } else {
             // logout
-            httpSession = request.getSession(false);
+            httpSession = request.getSession(false); // 존재하면 인스턴스화
             if (httpSession != null) {
                 httpSession.invalidate(); // 세션 삭제
             }
+            // System.out.println(httpSession.getAttribute("username"));
+            System.out.println(httpSession.getId());
+
             path = "/session/checkLogout.jsp";
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(path);

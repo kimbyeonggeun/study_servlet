@@ -1,8 +1,8 @@
 package com.byeonggeun.study_servlet.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.byeonggeun.study_servlet.dao.PollWithDB;
@@ -25,16 +25,17 @@ public class DetailServlets extends HttpServlet {
         // biz with DB and Class
         PollWithDB pollWithDB = new PollWithDB();
         HashMap<String, Object> question = null;
+        ArrayList<String> example = null;
         try {
-            question = pollWithDB.getQuestion(questions_Uid);
-            System.out.println(question.get("QUESTIONS_UID"));
-            System.out.println(question.get("QUESTIONS"));
-            System.out.println(question.get("ORDERS"));
+            ArrayList<Object> bundle = pollWithDB.getQuestion(questions_Uid);
+            question = (HashMap<String, Object>) bundle.get(0);
+            example = (ArrayList<String>) bundle.get(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         // output with html
         request.setAttribute("question", question);
+        request.setAttribute("example", example);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/polls/details.jsp");
         requestDispatcher.forward(request, response);

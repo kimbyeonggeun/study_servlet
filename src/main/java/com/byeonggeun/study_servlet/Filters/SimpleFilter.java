@@ -29,11 +29,12 @@ public class SimpleFilter implements Filter {
 
         String uri = httpServletRequest.getRequestURI();
 
-        if (uri.endsWith("/Servlets")) {
+        if (uri.endsWith("Servlets")) {
             httpServletResponse.sendRedirect("/index.html");
         } else {
             chain.doFilter(request, response);
         }
+
     }
 
     @Override

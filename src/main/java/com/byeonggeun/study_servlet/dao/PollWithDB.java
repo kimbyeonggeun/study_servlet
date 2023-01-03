@@ -30,7 +30,7 @@ public class PollWithDB {
     public ArrayList getQuestionsUidList() throws SQLException {
         Commons commons = new Commons();
         Statement statement = commons.getStatement();
-        String query = "SELECT QUESTIONS_UID FROM QUDSTIONS_LIST";
+        String query = "SELECT QUESTIONS_UID FROM QUESTIONS_LIST";
 
         ResultSet resultSet = statement.executeQuery(query);
         ArrayList questionsUidList = new ArrayList<>();

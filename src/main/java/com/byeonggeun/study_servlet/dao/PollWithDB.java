@@ -30,12 +30,12 @@ public class PollWithDB {
     public ArrayList getQuestionsUidList() throws SQLException {
         Commons commons = new Commons();
         Statement statement = commons.getStatement();
-        String query = "SELECT QUDSTIONS_UID FROM QUDSTIONS_LIST";
+        String query = "SELECT QUESTIONS_UID FROM QUDSTIONS_LIST";
 
         ResultSet resultSet = statement.executeQuery(query);
         ArrayList questionsUidList = new ArrayList<>();
         while (resultSet.next()) {
-            questionsUidList.add(resultSet.getString("QUDSTIONS_UID"));
+            questionsUidList.add(resultSet.getString("QUESTIONS_UID"));
         }
         return questionsUidList;
     }
@@ -43,7 +43,7 @@ public class PollWithDB {
     public ArrayList getExampleUidList(String questionsUid) throws SQLException {
         Commons commons = new Commons();
         Statement statement = commons.getStatement();
-        String query = "SELECT EXAMPLE_UID FROM answers WHERE QUDSTIONS_UID='" + questionsUid + "'";
+        String query = "SELECT EXAMPLE_UID FROM answers WHERE QUESTIONS_UID='" + questionsUid + "'";
 
         ResultSet resultSet = statement.executeQuery(query);
         ArrayList exampleUidList = new ArrayList<>();
